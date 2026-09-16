@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Primeiro Painel</title>
+    <style>
+        /* CSS: Aqui definimos o visual (cores, tamanhos, fontes) */
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .painel {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,255,0,0.2);
+            width: 300px;
+            text-align: center;
+        }
+        h2 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+        .grupo-controle {
+            margin: 15px 0;
+            text-align: left;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            border: 1px solid #4CAF50;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #4CAF50;
+            color: #000;
+        }
+        #btnInjetar {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #4CAF50;
+            color: black;
+            margin-top: 20px;
+        }
+        #btnInjetar:disabled {
+            background-color: #555;
+            color: #888;
+            border-color: #555;
+            cursor: not-allowed;
+        }
+        input[type="range"] {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HTML: Aqui definimos a estrutura e os elementos da tela -->
+    <div class="painel">
+        <h2>Painel VT</h2>
+        
+        <div class="grupo-controle">
+            <label>Sensibilidade:</label>
+            <input type="range" class="interativo" min="1" max="100" value="50">
+        </div>
+
+        <div class="grupo-controle">
+            <label>Área de Foco:</label><br>
+            <button class="interativo">Opção A</button>
+            <button class="interativo">Opção B</button>
+            <button class="interativo">Opção C</button>
+        </div>
+
+        <button id="btnInjetar">Aplicar Configurações</button>
+    </div>
+
+    <!-- JavaScript: Aqui definimos a lógica e o comportamento -->
+    <script>
+        const btnInjetar = document.getElementById('btnInjetar');
+        const elementosInterativos = document.querySelectorAll('.interativo');
+        
+        let textoOriginal = "Aplicar Configurações";
+
+        // Função que acontece quando o botão principal é clicado
+        btnInjetar.addEventListener('click', () => {
+            // Muda o texto e desativa o botão para não clicarem duas vezes
+            btnInjetar.innerText = "Carregando dados...";
+            btnInjetar.disabled = true;
+
+            // setTimeout cria um atraso (5000 milissegundos = 5 segundos)
+            setTimeout(() => {
+                btnInjetar.innerText = "Dados aplicados com sucesso!";
+                btnInjetar.disabled = false;
+            }, 5000);
+        });
+
+        // Função para resetar o botão principal se o usuário mexer em outra coisa
+        function resetarBotao() {
+            if (btnInjetar.innerText === "Dados aplicados com sucesso!") {
+                btnInjetar.innerText = textoOriginal;
+            }
+        }
+
+        // Adiciona a função de resetar a todos os botões e sliders do painel
+        elementosInterativos.forEach(elemento => {
+            elemento.addEventListener('input', resetarBotao); // Para o slider
+            elemento.addEventListener('click', resetarBotao); // Para os botões
+        });
+    </script>
+
+</body>
+</html>
